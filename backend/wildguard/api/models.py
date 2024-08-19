@@ -2,7 +2,8 @@ from django.db import models
 
 # Create your models here.
 
-# defining model for storing satellite images and detection results
+# defining model for storing satellite images and detection results 
+# example placement, look over API model & docs 
 class SatelliteImage(models.Model):
     image = models.ImageField(upload_to='images/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
