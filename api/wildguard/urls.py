@@ -1,3 +1,5 @@
+# wildguard/urls.py
+
 """
 URL configuration for wildguard project.
 
@@ -21,6 +23,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
+    path('api/', include('apps.my_app.urls')),
 
 ]
