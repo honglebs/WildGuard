@@ -11,7 +11,9 @@
 	</main>
 
 	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+		<!-- <p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p> -->
+		<p class="credit">&copy; <span id="currentYear"></span> by <span>WilGuard Group</span> | All Rights Reserved</p>
+		<p class="credit2">BAHA TEAM | Animal Hacks 2024</p>
 	</footer>
 </div>
 
@@ -28,21 +30,22 @@
 		flex-direction: column;
 		padding: 1rem;
 		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
+		max-width: 85vw;
+		margin: 0 100px;
 		box-sizing: border-box;
 	}
 
 	footer {
 		display: flex;
-		flex-direction: column;
-		justify-content: center;
+		flex-direction: row;
+		justify-content: space-between;
 		align-items: center;
-		padding: 12px;
+		padding: .5em;
+		background-color: var(--sec);
 	}
 
-	footer a {
-		font-weight: bold;
+	.credit, .credit2{
+		margin: 0 2em;
 	}
 
 	@media (min-width: 480px) {

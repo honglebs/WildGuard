@@ -1,39 +1,67 @@
 @import '@fontsource/fira-mono';
 
 :root {
-	--font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-	--font-mono: 'Fira Mono', monospace;
-	--color-bg-0: rgb(202, 216, 228);
+	/* --font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+
+	--font: "General Sans", serif;
+
+	--prim: #3850A0;
+    --sec: #2A407E;
+    --text: #F2F2ED;
+    --icon: #E9E9E1;
+	--highlights: #00FFCC;
+    --background: #151931;
+
+	--title: 48px;
+    --heading: 28px;
+    --subparagraph: 20px;
+    --paragraphs: 18px;
+
+	/* --color-bg-0: rgb(202, 216, 228);
 	--color-bg-1: hsl(209, 36%, 86%);
 	--color-bg-2: hsl(224, 44%, 95%);
 	--color-theme-1: #ff3e00;
 	--color-theme-2: #4075a6;
-	--color-text: rgba(0, 0, 0, 0.7);
+	--color-text: rgba(0, 0, 0, 0.7); */
 	--column-width: 42rem;
 	--column-margin-top: 4rem;
-	font-family: var(--font-body);
+	/* font-family: var(--font-body); */
 	color: var(--color-text);
 }
 
-body {
+@font-face {
+    font-family: "General Sans";
+    src: url("/font/GeneralSans_Complete/Fonts/OTF/GeneralSans-Regular.otf") format("opentype");
+    font-weight: regular;
+}
+
+@font-face {
+    font-family: "General Sans";
+    src: url("/font/GeneralSans_Complete/Fonts/OTF/GeneralSans-Bold.otf") format("opentype");
+    font-weight: bold;
+}
+
+body{
 	min-height: 100vh;
 	margin: 0;
 	background-attachment: fixed;
-	background-color: var(--color-bg-1);
+	background-color: var(--background);
 	background-size: 100vw 100vh;
-	background-image: radial-gradient(
+	font-family: var(--font);
+	/* color: var(--font); */
+	/* background-image: radial-gradient(
 			50% 50% at 50% 50%,
 			rgba(255, 255, 255, 0.75) 0%,
 			rgba(255, 255, 255, 0) 100%
 		),
-		linear-gradient(180deg, var(--color-bg-0) 0%, var(--color-bg-1) 15%, var(--color-bg-2) 50%);
+		linear-gradient(180deg, var(--color-bg-0) 0%, var(--color-bg-1) 15%, var(--color-bg-2) 50%); */
 }
 
-h1,
-h2,
-p {
+h1,h2,p {
+	/* font-family: var(--font); */
 	font-weight: 400;
+	color: var(--text);
 }
 
 p {
@@ -41,7 +69,8 @@ p {
 }
 
 a {
-	color: var(--color-theme-1);
+	font-family: var(--font);
+	color: var(--text);
 	text-decoration: none;
 }
 
@@ -50,15 +79,15 @@ a:hover {
 }
 
 h1 {
-	font-size: 2rem;
+	font-size: var(--title);
 	text-align: center;
 }
 
 h2 {
-	font-size: 1rem;
+	font-size: var(--heading);
 }
 
-pre {
+/* pre {
 	font-size: 16px;
 	font-family: var(--font-mono);
 	background-color: rgba(255, 255, 255, 0.45);
@@ -67,18 +96,18 @@ pre {
 	padding: 0.5em;
 	overflow-x: auto;
 	color: var(--color-text);
-}
+} */
 
-.text-column {
+/* .text-column {
 	display: flex;
 	max-width: 48rem;
 	flex: 0.6;
 	flex-direction: column;
 	justify-content: center;
 	margin: 0 auto;
-}
+} */
 
-input,
+/* input,
 button {
 	font-size: inherit;
 	font-family: inherit;
@@ -104,4 +133,6 @@ button:focus:not(:focus-visible) {
 	position: absolute;
 	width: 1px;
 	white-space: nowrap;
-}
+} */
+
+

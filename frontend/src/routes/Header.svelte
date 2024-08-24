@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import logo from '$lib/images/svelte-logo.svg';
-	import github from '$lib/images/github.svg';
+	// import github from '$lib/images/github.svg';
 </script>
 
 <header>
@@ -9,52 +9,62 @@
 		<a href="https://kit.svelte.dev">
 			<img src={logo} alt="SvelteKit" />
 		</a>
+		<a href="/">
+			Wild <span> Guard </span>
+		</a>
 	</div>
 
 	<nav>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
+		<!-- <svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
+		</svg> -->
 		<ul>
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Home</a>
+			<!-- <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
+				<a href="/">Wild<span>Guard</span></a>
+			</li> -->
+			<li aria-current={$page.url.pathname === '/sverdle' ? 'page' : undefined}>
+				<a href="/about">Live Detection</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-				<a href="/about">About</a>
-			</li>
-			<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-				<a href="/sverdle">Sverdle</a>
+			<li aria-current={$page.url.pathname.startsWith('/about') ? 'page' : undefined}>
+				<a href="/sverdle">About Us</a>
 			</li>
 		</ul>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
+		<!-- <svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
+		</svg> -->
 	</nav>
-
-	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
-			<img src={github} alt="GitHub" />
-		</a>
-	</div>
 </header>
 
 <style>
 	header {
 		display: flex;
 		justify-content: space-between;
+		padding: 2em 3em;
 	}
 
 	.corner {
-		width: 3em;
-		height: 3em;
+		display: flex;
+		justify-content: space-between;
+		/* width: 5em; */
+		font-size: var(--heading);
+		/* height: 3em; */
 	}
 
 	.corner a {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		font-weight: bold;
 		width: 100%;
 		height: 100%;
+	}
+
+	.corner a:hover{
+		text-decoration: none;
+	}
+
+	.corner a span{
+		color: var(--highlights);
 	}
 
 	.corner img {
@@ -66,7 +76,7 @@
 	nav {
 		display: flex;
 		justify-content: center;
-		--background: rgba(255, 255, 255, 0.7);
+		/* --background: rgba(255, 255, 255, 0.7); */
 	}
 
 	svg {
@@ -88,12 +98,12 @@
 		justify-content: center;
 		align-items: center;
 		list-style: none;
-		background: var(--background);
-		background-size: contain;
+		/* background-size: contain; */
 	}
 
 	li {
 		position: relative;
+		font-size: var(--heading);
 		height: 100%;
 	}
 
@@ -113,17 +123,39 @@
 		display: flex;
 		height: 100%;
 		align-items: center;
-		padding: 0 0.5rem;
-		color: var(--color-text);
-		font-weight: 700;
-		font-size: 0.8rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
+		padding: 0 1rem;
+		color: var(--text);
+		/* font-weight: 700; */
+		/* font-size: 0.8rem; */
+		font-size: var(--subparagraph);
+		/* text-transform: uppercase; */
+		/* letter-spacing: 0.1em; */
 		text-decoration: none;
 		transition: color 0.2s linear;
 	}
 
-	a:hover {
-		color: var(--color-theme-1);
+	nav a:hover{
+		color: var(--highlights);
+	}
+
+	nav a::after {
+		color: var(--highlights);
+		text-decoration: none;
+		content: ''; 
+		position: absolute; 
+		top: 4px; 
+		left: 0; 
+		width: 0; 
+		height: 3px; 
+		background: var(--highlights);
+		transform: scaleX(0); 
+		transform-origin: bottom right; 
+		transition: transform 0.3s ease; 
+	}
+
+	nav a:hover::after{
+		width: 100%; 
+		transform: scaleX(1);
+		transform-origin: bottom left; 
 	}
 </style>
