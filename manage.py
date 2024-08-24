@@ -1,11 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Django's command-line utility for administrative tasks."""
+# Django server managment script 
 import os
 import sys
 
+# print(sys.path)
 
 def main():
     """Run administrative tasks."""
+    
+    # explicitly yell at python that this is the path omg 
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'api'))
+
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wildguard.settings')
     try:
         from django.core.management import execute_from_command_line
