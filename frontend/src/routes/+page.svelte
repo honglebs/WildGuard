@@ -4,6 +4,7 @@
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
 	import poaching from '$lib/images/poaching.png';
 	import causesBG from '$lib/images/causes.png';
+	import causes from '$lib/images/causes2.png';
 </script>
 
 <svelte:head>
@@ -24,28 +25,30 @@
 			</div>
 		</div>
 		<div class="column">
-			<picture> 
-				<img src={poaching} alt="poaching" />
-			</picture>
-			<div class="sideBox">
-				<div class="funfact">
-					<p> Fun Fact! </p>
-					<p> The word "poach" comes from the Middle English word pocchen, which means "bagged" or "enclosed in a bag"</p>
-
-				</div>
-
-				<div class="stats">
-					<h1> 100 + </h1>
-					<p>poaching throughtout the year</p>
+			<div class="bento">
+				<picture> 
+					<img src={poaching} alt="poaching" />
+				</picture>
+				<div class="sideBox">
+					<div class="funfact">
+						<p> Fun Fact! </p>
+						<p> The word "poach" comes from the Middle English word pocchen, which means "bagged" or "enclosed in a bag"</p>
+	
+					</div>
+	
+					<div class="stats">
+						<h1> 100 + </h1>
+						<p>poaching throughtout the year</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div class="causes">
-		<picture> 
-			<img src={causesBG} alt="background" />
-		</picture>
+		<!-- <picture>  -->
+			<img src={causes} alt="background" />
+		<!-- </picture> -->
 	</div>
 </section>
 
@@ -91,10 +94,52 @@
 		opacity: 1;
 	}
 
-	/* .sideBox{
+	.bento {
+		width: 80%; /* adjust the width as needed */
 		display: flex;
 		flex-direction: column;
-	} */
+		align-items: center;
+	}
+
+	.sideBox {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		gap: 20px;
+	}
+
+	.funfact, .stats {
+		width: 22vw;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--icon);
+		padding: 10px;
+		/* margin: 10px; */
+		border-radius: 10px;
+	}
+
+	.stats{
+		background-color: var(--sec);
+	}
+
+	.funfact p{
+		color: var(--sec);
+		text-align: center;
+	}
+
+	.stats p {
+		color: var(--text);
+		text-align: center;
+	}
+
+	.stats h1 {
+		font-size: 2em;
+		margin-bottom: 10px;
+		color: var(--highlights);
+	}
 
 	.funfact{
 		background-color: var(--icon);
@@ -103,5 +148,6 @@
 	.funfact p{
 		color: var(--sec);
 	}
+	
 
 </style>

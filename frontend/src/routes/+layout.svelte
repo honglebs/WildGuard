@@ -1,6 +1,7 @@
 <script>
 	import Header from './Header.svelte';
 	import '../app.css';
+	import causesBG from '$lib/images/causes.png';
 </script>
 
 <div class="app">
@@ -9,6 +10,12 @@
 	<main>
 		<slot />
 	</main>
+
+	<!-- <div class="causes">
+		<picture> 
+			<img src={causesBG} alt="background" />
+		</picture>
+	</div> -->
 
 	<footer>
 		<!-- <p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p> -->
@@ -35,6 +42,10 @@
 		box-sizing: border-box;
 	}
 
+	picture img{
+		max-width: 100vw;
+
+	}
 	footer {
 		display: flex;
 		flex-direction: row;
