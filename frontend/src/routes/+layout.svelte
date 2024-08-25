@@ -1,29 +1,21 @@
 <script>
 	import Header from './Header.svelte';
 	import '../app.css';
-	import causesBG from '$lib/images/causes.png';
-	import { Styles } from '@sveltestrap/sveltestrap';
 </script>
 
 <div class="app">
 	<Header />
 
-	<main>
+	<main class="container mb-4">
 		<slot />
 	</main>
 
-	<!-- <div class="causes">
-		<picture> 
-			<img src={causesBG} alt="background" />
-		</picture>
-	</div> -->
-
-	<footer>
-		<!-- <p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p> -->
-		<p class="credit">&copy; <span id="currentYear"></span> by <span>WilGuard Group</span> | All Rights Reserved</p>
-		<p class="credit2">BAHA TEAM | Animal Hacks 2024</p>
+	<footer class="text-white py-2 py-md-3 d-flex justify-content-between align-items-center">
+		<p class="credit mb-0">© 2024 by <span>WilGuard Group</span> | All Rights Reserved</p>
+		<p class="credit2 mb-0">BAHA TEAM | Animal Hacks 2024</p>
 	</footer>
 </div>
+
 
 <style>
 	.app {
@@ -32,7 +24,7 @@
 		min-height: 100vh;
 	}
 
-	main {
+	/* main {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
@@ -41,24 +33,13 @@
 		max-width: 85vw;
 		margin: 0 100px;
 		box-sizing: border-box;
-	}
-	
+	} */
+
 	footer {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		padding: .5em;
 		background-color: var(--sec);
 	}
 
 	.credit, .credit2{
 		margin: 0 2em;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
 	}
 </style>
