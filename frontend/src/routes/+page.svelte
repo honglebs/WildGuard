@@ -1,15 +1,15 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
 	import poaching from '$lib/images/poaching.png';
-	import causesBG from '$lib/images/causes.png';
 	import causes from '$lib/images/causes2.png';
+	import bulb from '$lib/images/bulb.png';
+	import arrow from '$lib/images/arrow.png';
+	import { Styles } from '@sveltestrap/sveltestrap';
 </script>
 
 <svelte:head>
 	<title>WildGuard</title>
 	<meta name="description" content="WildGuard demo app" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </svelte:head>
 
 <section>
@@ -20,8 +20,12 @@
 			<h1>System</h1>
 
 			<div class="buttons">
-				<a href="/"> Live Detection </a> 
-				<a href="/"> Learn More </a>
+				<div class="border1">
+					<a href="/" class="btn"> Live Detection </a> 
+				</div>
+				<div class="border2">
+					<a href="/" class="btn"> Learn More </a>
+				</div>
 			</div>
 		</div>
 		<div class="column">
@@ -31,12 +35,15 @@
 				</picture>
 				<div class="sideBox">
 					<div class="funfact">
-						<p> Fun Fact! </p>
+						<div class="top">
+							<p> Fun Fact!</p>
+							<img src={bulb} alt="bulb"/>
+						</div>
 						<p> The word "poach" comes from the Middle English word pocchen, which means "bagged" or "enclosed in a bag"</p>
-	
 					</div>
 	
 					<div class="stats">
+						<img src={arrow} alt="arrow" class="arrow"/>
 						<h1> 100 + </h1>
 						<p>poaching throughtout the year</p>
 					</div>
@@ -45,6 +52,9 @@
 		</div>
 	</div>
 
+	<div class="history m-5 p-4">
+		<h1 class="fw-bold"> The <span style="color: #00FFCC">HISTORY</span> of <span style="color: #00FFCC">POACHING</span></h1>
+	</div>
 	<div class="causes">
 		<!-- <picture>  -->
 			<img src={causes} alt="background" />
@@ -94,8 +104,45 @@
 		opacity: 1;
 	}
 
+	.buttons {
+		margin: 1em 1em 1em 0;
+		z-index: 100;
+		display: flex;
+		justify-content: space-evenly;
+		gap: 20px;
+		width: 30vw;
+	}
+
+	.border1, .border2 {
+		flex: 1;
+		background: linear-gradient(to right, var(--highlights), var(--icon)); 
+		padding: 3px; 
+		border-radius: 8px; 
+	}
+
+	.btn {
+		display: block; 
+		background: var(--sec);
+		padding: .75em;
+		border-radius: 8px; 
+		text-align: center;
+		text-decoration: none; 
+		color: var(--text); 
+	}
+
+	.btn:hover {
+		color: var(--prim); 
+		background-color: var(--icon);
+		text-decoration: none;
+		font-weight: 500;
+	}
+
+	.border1:hover, .border2:hover{
+		background: linear-gradient(to right, var(--sec), var(--prim))
+	}
+
 	.bento {
-		width: 80%; /* adjust the width as needed */
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -109,36 +156,44 @@
 	}
 
 	.funfact, .stats {
-		width: 22vw;
+		width: 10vw;
 		flex: 1;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		background-color: var(--icon);
-		padding: 10px;
-		/* margin: 10px; */
+		padding: 5px;
 		border-radius: 10px;
 	}
 
 	.stats{
 		background-color: var(--sec);
+		position: relative;
 	}
 
 	.funfact p{
 		color: var(--sec);
 		text-align: center;
+		margin: 0;
 	}
 
 	.stats p {
 		color: var(--text);
 		text-align: center;
+		margin: 0;
 	}
 
 	.stats h1 {
-		font-size: 2em;
+		font-size: 3em;
 		margin-bottom: 10px;
 		color: var(--highlights);
+		transition: transform 0.3s ease, color 0.3s ease;
+	}
+
+	.stats h1:hover {
+		transform: scale(1.2);
+		/* color: var(--prim); */
 	}
 
 	.funfact{
@@ -148,6 +203,36 @@
 	.funfact p{
 		color: var(--sec);
 	}
-	
 
+	.top{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		gap: 5em;
+		width: 90%;
+	}
+
+	.top p{
+		background-color: var(--sec);
+		padding: .5em;
+		color: var(--text) !important;
+		border-radius: 8px;
+		align-items: center;
+		margin: 0.8rem 0 !important;
+	}
+
+	.top img{
+		width: auto;
+		height: 45px;
+		margin-top: 0.8rem;
+	}
+
+
+	.stats img.arrow {
+		position: absolute; 
+		top: .8rem;             
+		right: .8rem;          
+		height: 45px;      
+		margin: 5px;      
+	}
 </style>

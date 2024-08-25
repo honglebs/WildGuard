@@ -2,6 +2,7 @@
 	import Header from './Header.svelte';
 	import '../app.css';
 	import causesBG from '$lib/images/causes.png';
+	import { Styles } from '@sveltestrap/sveltestrap';
 </script>
 
 <div class="app">
@@ -41,11 +42,7 @@
 		margin: 0 100px;
 		box-sizing: border-box;
 	}
-
-	picture img{
-		max-width: 100vw;
-
-	}
+	
 	footer {
 		display: flex;
 		flex-direction: row;

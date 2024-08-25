@@ -23,10 +23,10 @@
 				<a href="/">Wild<span>Guard</span></a>
 			</li> -->
 			<li aria-current={$page.url.pathname === '/sverdle' ? 'page' : undefined}>
-				<a href="/about">Live Detection</a>
+				<a href="/sverdle">Live Detection</a>
 			</li>
 			<li aria-current={$page.url.pathname.startsWith('/about') ? 'page' : undefined}>
-				<a href="/sverdle">About Us</a>
+				<a href="/about">About Us</a>
 			</li>
 		</ul>
 		<!-- <svg viewBox="0 0 2 3" aria-hidden="true">
@@ -77,16 +77,6 @@
 		display: flex;
 		justify-content: center;
 		/* --background: rgba(255, 255, 255, 0.7); */
-	}
-
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
-	}
-
-	path {
-		fill: var(--background);
 	}
 
 	ul {
