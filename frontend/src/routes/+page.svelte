@@ -54,24 +54,26 @@
 	<div class="history m-5 p-4">
 		<h1 class="fw-bold"> The <span style="color: #00FFCC">HISTORY</span> of <span style="color: #00FFCC">POACHING</span></h1>
 	</div>
-	<div class="causes">
-		<!-- <picture>  -->
-			<img src={causes} alt="background" />
-		<!-- </picture> -->
+	<div class="causes position-relative">
+		<div class="phrase position-absolute text-center p-3">
+			<h2 class="fw-bold"> Why does it <span style="color: #00FFCC">matter</span>?</h2>
+			<p> Seize the moment—ensure future generations experience what we cherish today. </p>
+		</div>
+		<img src={causes} alt="background" class="img-fluid"/>
 	</div>
 </section>
 
 <style>
-	/* section {
+	section {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		margin: 0;
 		padding: 0;
-	} */
+	}
 
-	.row, .sideBox {
+	.row {
 		display: flex;
 		flex-direction: row;
 		width: 100%;
@@ -182,7 +184,6 @@
 	}
 
 	.top{
-		/* display: flex; */
 		flex-direction: row;
 		justify-content: space-between;
 		gap: 5em;
@@ -203,12 +204,30 @@
 		height: 45px;
 	}
 
-
 	.stats img.arrow {
 		position: absolute; 
 		top: .8rem;             
 		right: .8rem;          
 		height: 45px;      
 		margin: 5px;      
+	}
+
+	.causes{
+		width: 100%;
+		height: auto;
+		padding: 0;
+		margin: 0;
+	}
+
+	.phrase {
+		top: 55%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	.img-fluid {
+		width: 100%;
+		height: auto;
+		display: block;
 	}
 </style>
