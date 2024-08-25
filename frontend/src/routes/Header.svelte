@@ -13,7 +13,7 @@
 			<img src={logo} alt="SvelteKit" style="width: 3em"/>
 		</a>
 		<a href="/" class="fw-bold text-decoration-none">
-			Wild <span>Guard</span>
+			Wild<span>Guard</span>
 		</a>
 	</div>
 
