@@ -21,7 +21,6 @@ from django.http import HttpResponse
 def home_view(request):
     return HttpResponse("Welcome to the Home Page!")
 
-
 # views stored as results in the database for detection snf satellite image
 class SatelliteImageViewSet(viewsets.ModelViewSet):
     queryset = SatelliteImage.objects.all()
@@ -64,9 +63,24 @@ def oauth2callback(request):
 # once auth is done, use GEE in views for operations and events
 def get_poaching_risk(request):
     # Ensure GEE is initialized
-    credentials = initialize_earth_engine()
+    credentials_info = request.session.get('credentials')
+    
+    if not credentials_info:
+        return HttpResponseRedirect(reverse('oauth2callback'))  # Redirect to authentication if credentials are missing
+
+    credentials = ee.oauth.OAuth2Credentials(
+        credentials_info['token'],
+        credentials_info['client_id'],
+        credentials_info['client_secret'],
+        credentials_info['refresh_token'],
+        credentials_info['token_uri'],
+        credentials_info['scopes']
+    )
+    ee.Initialize(credentials)
 
     # Example: Define your area of interest
+    longitude = 35.6847  # Example coordinates
+    latitude = 139.7496
     aoi = ee.Geometry.Point([longitude, latitude])
     
     # Example: Calculate NDVI from Sentinel-2 data
