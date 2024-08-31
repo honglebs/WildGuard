@@ -30,6 +30,10 @@
 </header>
 
 <style>
+	header{
+		padding: 2em;
+	}
+
 	.corner {
 		font-size: var(--heading);
 		gap: 10px;
