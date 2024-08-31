@@ -119,6 +119,3 @@ def get_poaching_risk(request):
     
     return JsonResponse(data)
 
-
-def home_view(request):
-    return HttpResponse("Welcome to the Home Page!")
