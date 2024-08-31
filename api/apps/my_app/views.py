@@ -31,7 +31,7 @@ class DetectionResultViewSet(viewsets.ModelViewSet):
     queryset = DetectionResult.objects.all()
     serializer_class = DetectionResultSerializer
 
-# generate tje authroization URL and redirect to Google OAuth2 CS
+# generate the authroization URL and redirect to Google OAuth2 CS
 def start_auth(request):
     flow = Flow.from_client_secrets_file(
         os.path.join(settings.BASE_DIR, 'wildguard/secrets/client_secret.json'),
