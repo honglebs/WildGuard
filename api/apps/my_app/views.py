@@ -45,7 +45,10 @@ def start_auth(request):
         include_granted_scopes='true'
     )
 
+    # store the state in the session
     request.session['state'] = state
+
+    # redirect to google OAuth page
     return HttpResponseRedirect(authorization_url)
 
 
@@ -62,14 +65,15 @@ def oauth2callback(request):
         state=state
     )
 
+    # Ensure the redirect_uri matches the one registered in Google Cloud Console
     flow.redirect_uri = request.build_absolute_uri('/api/oauth2callback/')
 
+    # handle the callback
     authorization_response = request.build_absolute_uri()
     flow.fetch_token(authorization_response=authorization_response)
 
+    # Retrieve credentials and store them in the session
     credentials = flow.credentials
-    
-    # Save credentials in the session or database if needed
     request.session['credentials'] = {
         'token': credentials.token,
         'refresh_token': credentials.refresh_token,
