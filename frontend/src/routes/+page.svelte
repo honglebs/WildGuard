@@ -56,7 +56,7 @@
 	</div>
 	<div class="causes position-relative">
 		<div class="phrase position-absolute text-center p-3">
-			<h2 class="fw-bold"> Why does it <span style="color: #00FFCC">matter</span>?</h2>
+			<h2 class="fw-bold"> Why does this <span style="color: #00FFCC">matter</span>?</h2>
 			<p> Seize the moment—ensure future generations experience what we cherish today. </p>
 		</div>
 		<img src={causes} alt="background" class="img-fluid"/>
@@ -125,7 +125,7 @@
 	}
 
 	.btn:hover {
-		color: var(--prim); 
+		color: var(--prim) !important; 
 		background-color: var(--icon);
 		text-decoration: none;
 		font-weight: 500;

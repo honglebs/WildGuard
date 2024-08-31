@@ -11,7 +11,7 @@
 	</main>
 
 	<footer class="text-white py-2 py-md-3 d-flex justify-content-between align-items-center">
-		<p class="credit mb-0">© 2024 by <span>WilGuard Group</span> | All Rights Reserved</p>
+		<p class="credit mb-0">© 2024 by <span>Wild Guard Group</span> | All Rights Reserved</p>
 		<p class="credit2 mb-0">BAHA TEAM | Animal Hacks 2024</p>
 	</footer>
 </div>
