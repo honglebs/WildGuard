@@ -1,66 +1,38 @@
 <script>
 	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
-	// import github from '$lib/images/github.svg';
+	import logo from '$lib/images/logo.png';
 </script>
 
-<header>
-	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
+<svelte:head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</svelte:head>
+
+<header class="d-flex justify-content-between align-items-center p-4">
+	<div class="corner d-flex align-items-center gap-2">
 		<a href="/">
-			Wild <span> Guard </span>
+			<img src={logo} alt="SvelteKit" style="width: 3em"/>
+		</a>
+		<a href="/" class="fw-bold text-decoration-none">
+			Wild<span>Guard</span>
 		</a>
 	</div>
 
 	<nav>
-		<!-- <svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg> -->
-		<ul>
-			<!-- <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Wild<span>Guard</span></a>
-			</li> -->
-			<li aria-current={$page.url.pathname === '/sverdle' ? 'page' : undefined}>
-				<a href="/sverdle">Live Detection</a>
+		<ul class="nav">
+			<li class="nav-item">
+				<a href="/sverdle" class="nav-link" aria-current={$page.url.pathname === '/sverdle' ? 'page' : undefined}>Live Detection</a>
 			</li>
-			<li aria-current={$page.url.pathname.startsWith('/about') ? 'page' : undefined}>
-				<a href="/about">About Us</a>
+			<li class="nav-item">
+				<a href="/about" class="nav-link" aria-current={$page.url.pathname.startsWith('/about') ? 'page' : undefined}>About Us</a>
 			</li>
 		</ul>
-		<!-- <svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg> -->
 	</nav>
 </header>
 
 <style>
-	header {
-		display: flex;
-		justify-content: space-between;
-		padding: 2em 3em;
-	}
-
 	.corner {
-		display: flex;
-		justify-content: space-between;
-		/* width: 5em; */
 		font-size: var(--heading);
-		/* height: 3em; */
-	}
-
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-weight: bold;
-		width: 100%;
-		height: 100%;
-	}
-
-	.corner a:hover{
-		text-decoration: none;
+		gap: 10px;
 	}
 
 	.corner a span{
@@ -73,22 +45,8 @@
 		object-fit: contain;
 	}
 
-	nav {
-		display: flex;
-		justify-content: center;
-		/* --background: rgba(255, 255, 255, 0.7); */
-	}
-
 	ul {
-		position: relative;
-		padding: 0;
-		margin: 0;
 		height: 3em;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		list-style: none;
-		/* background-size: contain; */
 	}
 
 	li {
@@ -97,7 +55,7 @@
 		height: 100%;
 	}
 
-	li[aria-current='page']::before {
+	/* li[aria-current='page']::before {
 		--size: 6px;
 		content: '';
 		width: 0;
@@ -107,21 +65,13 @@
 		left: calc(50% - var(--size));
 		border: var(--size) solid transparent;
 		border-top: var(--size) solid var(--color-theme-1);
-	}
+	} */
 
 	nav a {
-		display: flex;
-		height: 100%;
-		align-items: center;
-		padding: 0 1rem;
 		color: var(--text);
-		/* font-weight: 700; */
-		/* font-size: 0.8rem; */
 		font-size: var(--subparagraph);
-		/* text-transform: uppercase; */
-		/* letter-spacing: 0.1em; */
-		text-decoration: none;
 		transition: color 0.2s linear;
+		text-decoration: none;
 	}
 
 	nav a:hover{

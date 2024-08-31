@@ -3,7 +3,6 @@
 	import causes from '$lib/images/causes2.png';
 	import bulb from '$lib/images/bulb.png';
 	import arrow from '$lib/images/arrow.png';
-	import { Styles } from '@sveltestrap/sveltestrap';
 </script>
 
 <svelte:head>
@@ -12,14 +11,14 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </svelte:head>
 
-<section>
+<section class="container-fluid">
 	<div class="row">
-		<div class="column">
+		<div class="column col-md-6 d-flex flex-column align-items-start mt-5 pt-5">
 			<h1 class="tagline"> Wildlife </h1>
 			<h1><span>Poaching Detection</span></h1>
 			<h1>System</h1>
 
-			<div class="buttons">
+			<div class="buttons d-flex gap-3 my-3">
 				<div class="border1">
 					<a href="/" class="btn"> Live Detection </a> 
 				</div>
@@ -28,14 +27,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="column">
+		<div class="column col-md-6 d-flex flex-column align-items-center">
 			<div class="bento">
 				<picture> 
 					<img src={poaching} alt="poaching" />
 				</picture>
-				<div class="sideBox">
-					<div class="funfact">
-						<div class="top">
+				<div class="d-flex flex-row justify-content-between gap-3 mt-3">
+					<div class="funfact d-flex flex-column align-items-center justify-content-center p-3 rounded">
+						<div class="top d-flex align-items-center gap-2 mb-2">
 							<p> Fun Fact!</p>
 							<img src={bulb} alt="bulb"/>
 						</div>
@@ -55,10 +54,12 @@
 	<div class="history m-5 p-4">
 		<h1 class="fw-bold"> The <span style="color: #00FFCC">HISTORY</span> of <span style="color: #00FFCC">POACHING</span></h1>
 	</div>
-	<div class="causes">
-		<!-- <picture>  -->
-			<img src={causes} alt="background" />
-		<!-- </picture> -->
+	<div class="causes position-relative">
+		<div class="phrase position-absolute text-center p-3">
+			<h2 class="fw-bold"> Why does it <span style="color: #00FFCC">matter</span>?</h2>
+			<p> Seize the moment—ensure future generations experience what we cherish today. </p>
+		</div>
+		<img src={causes} alt="background" class="img-fluid"/>
 	</div>
 </section>
 
@@ -72,7 +73,7 @@
 		padding: 0;
 	}
 
-	.row, .sideBox {
+	.row {
 		display: flex;
 		flex-direction: row;
 		width: 100%;
@@ -81,8 +82,6 @@
 	}
 
 	.column {
-		display: flex;
-		flex-direction: column;
 		flex: 1;
 		position: relative;
 	}
@@ -105,11 +104,6 @@
 	}
 
 	.buttons {
-		margin: 1em 1em 1em 0;
-		z-index: 100;
-		display: flex;
-		justify-content: space-evenly;
-		gap: 20px;
 		width: 30vw;
 	}
 
@@ -139,20 +133,6 @@
 
 	.border1:hover, .border2:hover{
 		background: linear-gradient(to right, var(--sec), var(--prim))
-	}
-
-	.bento {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
-	.sideBox {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		gap: 20px;
 	}
 
 	.funfact, .stats {
@@ -193,7 +173,6 @@
 
 	.stats h1:hover {
 		transform: scale(1.2);
-		/* color: var(--prim); */
 	}
 
 	.funfact{
@@ -205,7 +184,6 @@
 	}
 
 	.top{
-		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		gap: 5em;
@@ -215,18 +193,16 @@
 	.top p{
 		background-color: var(--sec);
 		padding: .5em;
-		color: var(--text) !important;
+		color: var(--text);
 		border-radius: 8px;
 		align-items: center;
-		margin: 0.8rem 0 !important;
+		margin: 0.8rem 0;
 	}
 
 	.top img{
 		width: auto;
 		height: 45px;
-		margin-top: 0.8rem;
 	}
-
 
 	.stats img.arrow {
 		position: absolute; 
@@ -234,5 +210,24 @@
 		right: .8rem;          
 		height: 45px;      
 		margin: 5px;      
+	}
+
+	.causes{
+		width: 100%;
+		height: auto;
+		padding: 0;
+		margin: 0;
+	}
+
+	.phrase {
+		top: 55%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	.img-fluid {
+		width: 100%;
+		height: auto;
+		display: block;
 	}
 </style>
