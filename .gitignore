@@ -10,7 +10,7 @@ node_modules
 .DS_Store
 Thumbs.db
 
-# Env
+# Env, enviroment 
 .env
 .env.*
 venv/
@@ -21,3 +21,9 @@ venv/
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Ignore the client secrets file
+api/wildguard/secrets
+
+
+

@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from google_auth_oauthlib.flow import Flow
 from django.conf import settings
+import os
 
 # views for the earth engine 
 from django.http import JsonResponse
@@ -30,18 +31,38 @@ class DetectionResultViewSet(viewsets.ModelViewSet):
     queryset = DetectionResult.objects.all()
     serializer_class = DetectionResultSerializer
 
+# generate tje authroization URL and redirect to Google OAuth2 CS
+def start_auth(request):
+    flow = Flow.from_client_secrets_file(
+        os.path.join(settings.BASE_DIR, 'wildguard/secrets/client_secret.json'),
+        scopes=['https://www.googleapis.com/auth/earthengine.readonly']
+    )
+
+    flow.redirect_uri = request.build_absolute_uri('/api/oauth2callback/')
+
+    authorization_url, state = flow.authorization_url(
+        access_type='offline',
+        include_granted_scopes='true'
+    )
+
+    request.session['state'] = state
+    return HttpResponseRedirect(authorization_url)
+
+
 # this is to handle OAuth2 callback where google will redirect the user after
 # application is authroized 
 def oauth2callback(request):
-    flow = Flow.from_client_config({
-        "web": {
-            "client_id": settings.GOOGLE_CLIENT_ID,
-            "client_secret": settings.GOOGLE_CLIENT_SECRET,
-            "redirect_uris": [settings.GOOGLE_REDIRECT_URI]
-        }
-    }, scopes=['https://www.googleapis.com/auth/earthengine.readonly'])
 
-    flow.redirect_uri = settings.GOOGLE_REDIRECT_URI
+    # load the client secrets from JSON file 
+    state = request.session['state']
+
+    flow = Flow.from_client_secrets_file(
+        os.path.join(settings.BASE_DIR, 'wildguard/secrets/client_secret.json'),
+        scopes=['https://www.googleapis.com/auth/earthengine.readonly'],
+        state=state
+    )
+
+    flow.redirect_uri = request.build_absolute_uri('/api/oauth2callback/')
 
     authorization_response = request.build_absolute_uri()
     flow.fetch_token(authorization_response=authorization_response)
@@ -58,7 +79,8 @@ def oauth2callback(request):
         'scopes': credentials.scopes
     }
     
-    return HttpResponseRedirect(reverse('index'))  # Redirect to your desired page after authentication
+    return HttpResponseRedirect('/')  # Redirect to your home or another page
+
 
 # once auth is done, use GEE in views for operations and events
 def get_poaching_risk(request):
@@ -97,3 +119,6 @@ def get_poaching_risk(request):
     
     return JsonResponse(data)
 
+
+def home_view(request):
+    return HttpResponse("Welcome to the Home Page!")
