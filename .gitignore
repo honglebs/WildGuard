@@ -23,7 +23,8 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 # Ignore the client secrets file
-api/wildguard/secrets
+# api/wildguard/secrets
+client_secret.json
 
 
 
