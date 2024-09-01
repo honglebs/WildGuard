@@ -1,4 +1,4 @@
-# apps/my_app/urls.py
+# /api/apps/my_app/urls.py
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
@@ -20,3 +20,4 @@ urlpatterns = [
     path('poaching-risk/', get_poaching_risk, name='get_poaching_risk'), # Poaching risk endpoint
     path('', include(router.urls)), # other endpoints
 ]
+

@@ -20,7 +20,10 @@
 	<nav>
 		<ul class="nav">
 			<li class="nav-item">
-				<a href="/sverdle" class="nav-link" aria-current={$page.url.pathname === '/sverdle' ? 'page' : undefined}>Live Detection</a>
+				<a href="/wildhackle" class="nav-link" aria-current={$page.url.pathname === '/wildhackle' ? 'page' : undefined}>WildHackle</a>
+			</li>
+			<li class="nav-item">
+				<a href="/detection" class="nav-link" aria-current={$page.url.pathname === '/detection' ? 'page' : undefined}>Live Detection</a>
 			</li>
 			<li class="nav-item">
 				<a href="/about" class="nav-link" aria-current={$page.url.pathname.startsWith('/about') ? 'page' : undefined}>About Us</a>
@@ -79,7 +82,7 @@
 	}
 
 	nav a:hover{
-		color: var(--highlights);
+		color: var(--highlights) !important;
 	}
 
 	nav a::after {
