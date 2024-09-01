@@ -1,0 +1,6 @@
+names:
+- elephant
+nc: 1
+test: C:\Users\aurel\Downloads\WildGuard\ml-ai\test
+train: C:\Users\aurel\Downloads\WildGuard\ml-ai\train
+val: C:\Users\aurel\Downloads\WildGuard\ml-ai\valid
