@@ -47,5 +47,6 @@ export const words = [
 	"koala",
 	"zebra",
 	"whale",
-	"panda"
+	"panda",
+    "earth"
 ];

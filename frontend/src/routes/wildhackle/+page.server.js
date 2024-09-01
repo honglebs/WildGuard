@@ -3,19 +3,19 @@ import { Game } from './game';
 
 /** @satisfies {import('./$types').PageServerLoad} */
 export const load = ({ cookies }) => {
-	const game = new Game(cookies.get('sverdle'));
+	const game = new Game(cookies.get('wildhackle'));
 
 	return {
 		/**
 		 * The player's guessed words so far
 		 */
-		guesses: game.guesses,
+		guesses: game.guesses || [],
 
 		/**
 		 * An array of strings like '__x_c' corresponding to the guesses, where 'x' means
 		 * an exact match, and 'c' means a close match (right letter, wrong place)
 		 */
-		answers: game.answers,
+		answers: game.answers || [],
 
 		/**
 		 * The correct answer, revealed if the game is over
@@ -31,7 +31,7 @@ export const actions = {
 	 * is available, this will happen in the browser instead of here
 	 */
 	update: async ({ request, cookies }) => {
-		const game = new Game(cookies.get('sverdle'));
+		const game = new Game(cookies.get('wildhackle'));
 
 		const data = await request.formData();
 		const key = data.get('key');
@@ -44,7 +44,7 @@ export const actions = {
 			game.guesses[i] += key;
 		}
 
-		cookies.set('sverdle', game.toString(), { path: '/' });
+		cookies.set('wildhackle', game.toString(), { path: '/' });
 	},
 
 	/**
@@ -52,7 +52,7 @@ export const actions = {
 	 * the server, so that people can't cheat by peeking at the JavaScript
 	 */
 	enter: async ({ request, cookies }) => {
-		const game = new Game(cookies.get('sverdle'));
+		const game = new Game(cookies.get('wildhackle'));
 
 		const data = await request.formData();
 		const guess = /** @type {string[]} */ (data.getAll('guess'));
@@ -61,10 +61,10 @@ export const actions = {
 			return fail(400, { badGuess: true });
 		}
 
-		cookies.set('sverdle', game.toString(), { path: '/' });
+		cookies.set('wildhackle', game.toString(), { path: '/' });
 	},
 
 	restart: async ({ cookies }) => {
-		cookies.delete('sverdle', { path: '/' });
+		cookies.delete('wildhackle', { path: '/' });
 	}
 };
