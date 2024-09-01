@@ -5,10 +5,11 @@
 	"/about": [
 		"src/routes/about/+page.js"
 	],
-	"/sverdle": [
-		"src/routes/sverdle/+page.server.js"
+	"/detection": [],
+	"/wildhackle": [
+		"src/routes/wildhackle/+page.server.js"
 	],
-	"/sverdle/how-to-play": [
-		"src/routes/sverdle/how-to-play/+page.js"
+	"/wildhackle/how-to-play": [
+		"src/routes/wildhackle/how-to-play/+page.js"
 	]
 }

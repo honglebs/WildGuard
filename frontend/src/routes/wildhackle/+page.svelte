@@ -92,11 +92,12 @@
 <svelte:window on:keydown={keydown} />
 
 <svelte:head>
-	<title>Sverdle</title>
-	<meta name="description" content="A Wordle clone written in SvelteKit" />
+	<title>WildHackle</title>
+	<!-- <meta name="description" content="A Wordle clone written in SvelteKit" /> -->
 </svelte:head>
 
-<h1 class="visually-hidden">Sverdle</h1>
+<h1 class="visually-hidden">WildHackle</h1>
+<p> Wild Guard's Wordle</p>
 
 <form
 	method="POST"
