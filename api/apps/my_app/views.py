@@ -296,25 +296,25 @@ def get_poaching_risk(request):
  # fetch map data from the Django API GEE and us it with mapping library like leaflet? 
  # find where to render map 
  
-def get_map_data(request):
-    region = ee.Geometry.Polygon(
-        [[[-5.0, 5.0], [35.0, 5.0], [35.0, -5.0], [-5.0, -5.0], [-5.0, 5.0]]]
-    )
+# def get_map_data(request):
+#     region = ee.Geometry.Polygon(
+#         [[[-5.0, 5.0], [35.0, 5.0], [35.0, -5.0], [-5.0, -5.0], [-5.0, 5.0]]]
+#     )
 
-    imagery = ee.ImageCollection('COPERNICUS/S2') \
-        .filterBounds(region) \
-        .filterDate('2023-01-01', '2023-12-31') \
-        .sort('CLOUDY_PIXEL_PERCENTAGE') \
-        .first()
+#     imagery = ee.ImageCollection('COPERNICUS/S2') \
+#         .filterBounds(region) \
+#         .filterDate('2023-01-01', '2023-12-31') \
+#         .sort('CLOUDY_PIXEL_PERCENTAGE') \
+#         .first()
 
-    ndvi = imagery.normalizedDifference(['B8', 'B4']).rename('NDVI')
-    vis_params = {'min': 0, 'max': 1, 'palette': ['white', 'green']}
-    map_id = ndvi.getMapId(vis_params)
+#     ndvi = imagery.normalizedDifference(['B8', 'B4']).rename('NDVI')
+#     vis_params = {'min': 0, 'max': 1, 'palette': ['white', 'green']}
+#     map_id = ndvi.getMapId(vis_params)
 
-    return JsonResponse({
-        'map_id': map_id['mapid'],
-        'token': map_id['token'],
-        'tile_url': map_id['tile_fetcher'].url_format,
-    })
+#     return JsonResponse({
+#         'map_id': map_id['mapid'],
+#         'token': map_id['token'],
+#         'tile_url': map_id['tile_fetcher'].url_format,
+#     })
 
 
