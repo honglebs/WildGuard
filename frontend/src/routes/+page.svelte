@@ -3,6 +3,7 @@
 	import causes from '$lib/images/causes2.png';
 	import bulb from '$lib/images/bulb.png';
 	import arrow from '$lib/images/arrow.png';
+	import feature from '$lib/images/feature.png';
 </script>
 
 <svelte:head>
@@ -51,8 +52,8 @@
 		</div>
 	</div>
 
-	<div class="history m-5 p-4">
-		<h1 class="fw-bold"> The <span style="color: #00FFCC">HISTORY</span> of <span style="color: #00FFCC">POACHING</span></h1>
+	<div class="history mt-5 mb-5 p-4">
+		<h1 class="fw-bold mt-2"> The <span style="color: #00FFCC">HISTORY</span> of <span style="color: #00FFCC">POACHING</span></h1>
 		<!-- <p class=""> Poaching, or the illegal hunting of animals, can be seen all over the world, and a multitude of animals are targeted, including, but not limited to, rhinos and elephants. There are many different reasons as to why these animals are hunted, some being for their meat, horns, fur, bones, or even for entertainment purposes. In the case of rhinos and elephants, they are both hunted for their horns and tusks, as people often created medicines and ivory out of the animals’ body parts. Poaching has been around since the middle ages, when lawmakers started creating rules and regulations to protect the wildlife in the area. In North Africa specifically, poaching started in the 14th century, and was the main cause of the extinction of elephants about 1,000 years ago within the area. Poaching is not limited to only land animals, but also sea life. Many sea animals, including sharks, turtles, and many other fish species are poached daily, harming the ecosystems they are part of, and also the plant life surrounding them, such as coral reefs. Poaching has countless harmful effects on the earth, yet not enough is done to protect the wildlife that keeps our planet healthy and beautiful. Help and awareness is spread throughout the world, however poaching is still at large in many areas of the world.</p> -->
 		<div class="container mt-5">
 			<div class="row">
@@ -70,6 +71,9 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="feature m-5 p-5">
+		<img src={feature} alt="background" class="img-fluid" />
 	</div>
 	<div class="causes position-relative">
 		<div class="phrase position-absolute text-center p-3">

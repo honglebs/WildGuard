@@ -7,4 +7,9 @@ import os
 
 def initialize_earth_engine(credentials):
     # Initialize Earth Engine using the credentials from OAuth2
-    ee.Initialize(credentials)
+
+    if not ee.data._credentials:
+        ee.Initialize(credentials)
+    else:
+        ee.Reset()
+        ee.Initialize(credentials)

@@ -6,7 +6,7 @@ from .views import SatelliteImageViewSet, DetectionResultViewSet, start_auth, oa
 
 # auth stuff
 from django.urls import path
-from .views import oauth2callback, get_poaching_risk
+from .views import oauth2callback, get_poaching_risk, get_map_data
 
 router = DefaultRouter()
 router.register(r'images', SatelliteImageViewSet)
@@ -18,6 +18,7 @@ urlpatterns = [
     path('start/', start_auth, name='start_auth'),  # Start OAuth2 flow
     path('oauth2callback/', oauth2callback, name='oauth2callback'), #OAuth callback
     path('poaching-risk/', get_poaching_risk, name='get_poaching_risk'), # Poaching risk endpoint
+    path('api/map-data/', get_map_data, name='get_map_data'),
     path('', include(router.urls)), # other endpoints
 ]
 
