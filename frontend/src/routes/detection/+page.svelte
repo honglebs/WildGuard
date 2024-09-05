@@ -68,17 +68,18 @@
     // Fetch map data from the backend
     async function fetchMapData() {
         try {
-            const response = await fetch('/api/map-data/');
+            const response = await fetch('/api/map-data');
             if (!response.ok) {
-                throw new Error('Failed to load map data.');
+                throw new Error('Failed to load map data from the backend.');
             }
             const data = await response.json();
+            console.log("Map Data Fetched:", data);  // Debugging: Check fetched data
             return data;
         } catch (err) {
             if (err instanceof Error) {
                 error = err.message;  // If err is an instance of Error, use the message
             } else {
-                error = 'An unknown error occurred';  // Handle other types of thrown values
+                error = 'An unknown error occurred while fetching map data.';  // Handle other types of thrown values
             }
             console.error(err);
         }
@@ -92,6 +93,7 @@
             const mapData = await fetchMapData();
 
             if (mapData && !error) {
+                console.log("Initializing Leaflet map with data:", mapData);  // Debugging
                 // Initialize Leaflet map
                 map = L.map('map').setView([0, 15], 5);
 

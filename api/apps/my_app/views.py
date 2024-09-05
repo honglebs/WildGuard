@@ -343,7 +343,7 @@ def get_map_data(request):
         # Return map data to be consumed by the frontend
         return JsonResponse({
             'map_id': map_id['mapid'],
-            'token': map_id['token'],
+            'token': map_id.get('token', ''),
             'tile_url': map_id['tile_fetcher'].url_format,
         })
 
