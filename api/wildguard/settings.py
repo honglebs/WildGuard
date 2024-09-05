@@ -46,6 +46,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5000",  # or wherever your Svelte app is running
     "http://127.0.0.1:5000",
+    'http://localhost:5173',  # Vite server address
 ]
 
 ROOT_URLCONF = 'wildguard.urls'
