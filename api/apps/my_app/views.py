@@ -296,25 +296,66 @@ def get_poaching_risk(request):
  # fetch map data from the Django API GEE and us it with mapping library like leaflet? 
  # find where to render map 
  
-# def get_map_data(request):
-#     region = ee.Geometry.Polygon(
-#         [[[-5.0, 5.0], [35.0, 5.0], [35.0, -5.0], [-5.0, -5.0], [-5.0, 5.0]]]
-#     )
 
-#     imagery = ee.ImageCollection('COPERNICUS/S2') \
-#         .filterBounds(region) \
-#         .filterDate('2023-01-01', '2023-12-31') \
-#         .sort('CLOUDY_PIXEL_PERCENTAGE') \
-#         .first()
+def initialize_earth_engine(credentials):
+    # Initialize Earth Engine with OAuth2 credentials
+    ee.Initialize(credentials)
 
-#     ndvi = imagery.normalizedDifference(['B8', 'B4']).rename('NDVI')
-#     vis_params = {'min': 0, 'max': 1, 'palette': ['white', 'green']}
-#     map_id = ndvi.getMapId(vis_params)
+def get_map_data(request):
+    # Retrieve the stored credentials from the session
+    credentials_info = request.session.get('credentials')
+    
+    if not credentials_info:
+        # If no credentials, redirect to the OAuth2 flow
+        return HttpResponseRedirect(reverse('oauth2callback'))
 
-#     return JsonResponse({
-#         'map_id': map_id['mapid'],
-#         'token': map_id['token'],
-#         'tile_url': map_id['tile_fetcher'].url_format,
-#     })
+    # Recreate the Credentials object from the session data
+    credentials = Credentials(
+        token=credentials_info['token'],
+        refresh_token=credentials_info['refresh_token'],
+        token_uri=credentials_info['token_uri'],
+        client_id=credentials_info['client_id'],
+        client_secret=credentials_info['client_secret'],
+        scopes=credentials_info['scopes']
+    )
 
+    try:
+        # Initialize Earth Engine with the credentials
+        initialize_earth_engine(credentials)
 
+        # Define a region (you can customize this as needed)
+        region = ee.Geometry.Polygon(
+            [[[-5.0, 5.0], [35.0, 5.0], [35.0, -5.0], [-5.0, -5.0], [-5.0, 5.0]]]
+        )
+
+        # Fetch satellite imagery
+        imagery = ee.ImageCollection('COPERNICUS/S2') \
+            .filterBounds(region) \
+            .filterDate('2023-01-01', '2023-12-31') \
+            .sort('CLOUDY_PIXEL_PERCENTAGE') \
+            .first()
+
+        # Compute NDVI
+        ndvi = imagery.normalizedDifference(['B8', 'B4']).rename('NDVI')
+        vis_params = {'min': 0, 'max': 1, 'palette': ['white', 'green']}
+        map_id = ndvi.getMapId(vis_params)
+
+        # Return map data to be consumed by the frontend
+        return JsonResponse({
+            'map_id': map_id['mapid'],
+            'token': map_id['token'],
+            'tile_url': map_id['tile_fetcher'].url_format,
+        })
+
+    except ee.EEException as e:
+        # Handle Earth Engine-specific exceptions
+        return JsonResponse({'error': 'Earth Engine Error: ' + str(e)}, status=500)
+
+    except Exception as e:
+        # Handle any other exceptions
+        return JsonResponse({'error': 'Unexpected Error: ' + str(e)}, status=500)
+    
+    # ran after auth, created map object for testing on map-data:
+    # {"map_id": "projects/earthengine-legacy/maps/c8c65992d430b7f544e9b6eae3aa2b7f-696a80bdda3d56df7ca984eae20ece1f", 
+    # "token": "",
+    #  "tile_url": "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/maps/c8c65992d430b7f544e9b6eae3aa2b7f-696a80bdda3d56df7ca984eae20ece1f/tiles/{z}/{x}/{y}"}
