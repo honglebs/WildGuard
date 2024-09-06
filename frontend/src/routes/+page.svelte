@@ -21,10 +21,10 @@
 
 			<div class="buttons d-flex gap-3 my-3">
 				<div class="border1">
-					<a href="/" class="btn"> Live Detection </a> 
+					<a href="/detection" class="btn"> Live Detection </a> 
 				</div>
 				<div class="border2">
-					<a href="/" class="btn"> Learn More </a>
+					<a href="/about" class="btn"> Learn More </a>
 				</div>
 			</div>
 		</div>

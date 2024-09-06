@@ -1,117 +1,58 @@
 <script>
     export const ssr = false;
     import { onMount } from 'svelte';
-    import L from 'leaflet';
 
-    let poachingRisk = null;
-    let map;
-   
-    /**
-   * @type {string | null}
-   */
-    let error = null; 
-    
-    
-
-
-    // // Fetch poaching risk data from the backend
-    // async function fetchPoachingRisk() {
-    //     try {
-    //         const response = await fetch('/api/poaching-risk/');
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         const data = await response.json();
-    //         poachingRisk = data.poaching_risk;
-    //     } catch (err) {
-    //         // error = err.message;
-    //     }
-    // }
-
-    // // Fetch the data when the component is mounted
-    // onMount(() => {
-    //     fetchPoachingRisk();
-    // });
-
-    // // Fetch map data from the backend
-    // async function fetchMapData() {
-    //     try {
-    //         const response = await fetch('/api/map-data/');
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         const data = await response.json();
-    //         return data;
-    //     } catch (err) {
-    //         error = err instanceof Error ? err.message : 'Unknown error occurred';
-    //         console.error(err);
-    //     }
-    // }
-
-    // // Initialize the map when the component is mounted
-    // onMount(async () => {
-    //     const mapData = await fetchMapData();
-
-    //     if (mapData && !error) {
-    //         // Initialize Leaflet map
-    //         map = L.map('map').setView([0, 15], 5);
-
-    //         // Add tile layer from GEE
-    //         L.tileLayer(mapData.tile_url, {
-    //             attribution: 'Map data © Google Earth Engine',
-    //             maxZoom: 18,
-    //             tileSize: 256,
-    //             zoomOffset: 0,
-    //         }).addTo(map);
-    //     }
-    // });
-
+    let map;  // Store the Leaflet map instance
+    let error = null;  // Track errors
 
     // Fetch map data from the backend
     async function fetchMapData() {
         try {
-            const response = await fetch('/api/map-data/');
+            const response = await fetch('http://127.0.0.1:8000/api/map-data/');
+            
+            console.log('Response status:', response.status);  // Log the status code
+
             if (!response.ok) {
-                throw new Error('Failed to load map data from the backend.');
+                throw new Error(`Failed to load map data from the backend. Status code: ${response.status}`);
             }
+
             const data = await response.json();
-            console.log("Map Data Fetched:", data);  // Debugging: Check fetched data
+            console.log("Map Data Fetched:", data);  // Log fetched data for debugging
             return data;
         } catch (err) {
-            if (err instanceof Error) {
-                error = err.message;  // If err is an instance of Error, use the message
-            } else {
-                error = 'An unknown error occurred while fetching map data.';  // Handle other types of thrown values
-                console.error("Map Data Fetching Error:", error);
-            }
-            console.error(err);
+            error = err instanceof Error ? err.message : 'An unknown error occurred while fetching map data.';
+            console.error("Error while fetching map data:", err);  // Log error
+            return null;  // Return null on error
         }
     }
 
-    // Initialize the map when the component is mounted
+    // Initialize the Leaflet map once the component mounts
     onMount(async () => {
-        if (typeof window !== 'undefined') {  // Only run on the client
-            const L = await import('leaflet');  // Dynamically import Leaflet
+        if (typeof window !== 'undefined') {  // Only run on the client side
+            try {
+                const L = await import('leaflet');  // Dynamically import Leaflet
 
-            const mapData = await fetchMapData();
+                const mapData = await fetchMapData();  // Fetch map data
 
-            if (mapData && !error) {
-                console.log("Initializing Leaflet map with data:", mapData);  // Debugging
-                // Initialize Leaflet map
-                map = L.map('map').setView([0, 15], 5);
+                if (mapData && !error) {
+                    map = L.map('map').setView([0, 15], 5);
 
-                // Add tile layer from GEE
-                L.tileLayer(mapData.tile_url, {
-                    attribution: 'Map data © Google Earth Engine',
-                    maxZoom: 18,
-                    tileSize: 256,
-                    zoomOffset: 0,
-                }).addTo(map);
+                    // Add a tile layer to the map using the data from the backend
+                    L.tileLayer(mapData.tile_url, {
+                        attribution: 'Map data © Google Earth Engine',
+                        maxZoom: 18,
+                        tileSize: 256,
+                        zoomOffset: 0,
+                    }).addTo(map);
+                }
+            } catch (err) {
+                error = 'Error initializing map';  // Handle any initialization errors
+                console.error("Map Initialization Error:", err);
             }
         }
     });
-
 </script>
+
 
 <svelte:head>
     <title>Live Detection</title>
@@ -130,5 +71,4 @@
         width: 100%;
         height: 600px;
     }
-    
 </style>
