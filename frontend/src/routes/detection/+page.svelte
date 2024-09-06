@@ -1,4 +1,5 @@
 <script>
+    export const ssr = false;
     import { onMount } from 'svelte';
     import L from 'leaflet';
 
@@ -9,7 +10,8 @@
    * @type {string | null}
    */
     let error = null; 
-    export const ssr = false;
+    
+    
 
 
     // // Fetch poaching risk data from the backend
@@ -68,7 +70,7 @@
     // Fetch map data from the backend
     async function fetchMapData() {
         try {
-            const response = await fetch('/api/map-data');
+            const response = await fetch('/api/map-data/');
             if (!response.ok) {
                 throw new Error('Failed to load map data from the backend.');
             }
@@ -80,6 +82,7 @@
                 error = err.message;  // If err is an instance of Error, use the message
             } else {
                 error = 'An unknown error occurred while fetching map data.';  // Handle other types of thrown values
+                console.error("Map Data Fetching Error:", error);
             }
             console.error(err);
         }
