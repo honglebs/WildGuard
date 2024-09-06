@@ -302,28 +302,36 @@ def initialize_earth_engine(credentials):
     ee.Initialize(credentials)
 
 def get_map_data(request):
+    logger.info("Request to /api/map-data received.")
+
     # Retrieve the stored credentials from the session
     credentials_info = request.session.get('credentials')
-    
+
     if not credentials_info:
-        # If no credentials, redirect to the OAuth2 flow
+        logger.warning("No credentials found in session. Redirecting to OAuth2 flow.")
         return HttpResponseRedirect(reverse('oauth2callback'))
 
     # Recreate the Credentials object from the session data
-    credentials = Credentials(
-        token=credentials_info['token'],
-        refresh_token=credentials_info['refresh_token'],
-        token_uri=credentials_info['token_uri'],
-        client_id=credentials_info['client_id'],
-        client_secret=credentials_info['client_secret'],
-        scopes=credentials_info['scopes']
-    )
+    try:
+        credentials = Credentials(
+            token=credentials_info['token'],
+            refresh_token=credentials_info['refresh_token'],
+            token_uri=credentials_info['token_uri'],
+            client_id=credentials_info['client_id'],
+            client_secret=credentials_info['client_secret'],
+            scopes=credentials_info['scopes']
+        )
+        logger.info("Credentials recreated successfully.")
+    except Exception as e:
+        logger.error(f"Error while recreating credentials: {str(e)}")
+        return JsonResponse({'error': 'Error while recreating credentials: ' + str(e)}, status=500)
 
     try:
         # Initialize Earth Engine with the credentials
         initialize_earth_engine(credentials)
+        logger.info("Earth Engine initialized successfully.")
 
-        # Define a region (you can customize this as needed)
+        # Define a region (customize this as needed)
         region = ee.Geometry.Polygon(
             [[[-5.0, 5.0], [35.0, 5.0], [35.0, -5.0], [-5.0, -5.0], [-5.0, 5.0]]]
         )
@@ -334,11 +342,16 @@ def get_map_data(request):
             .filterDate('2023-01-01', '2023-12-31') \
             .sort('CLOUDY_PIXEL_PERCENTAGE') \
             .first()
+        
+        if not imagery:
+            logger.warning("No imagery found for the specified region.")
+            return JsonResponse({'error': 'No imagery found for the specified region.'}, status=404)
 
         # Compute NDVI
         ndvi = imagery.normalizedDifference(['B8', 'B4']).rename('NDVI')
         vis_params = {'min': 0, 'max': 1, 'palette': ['white', 'green']}
         map_id = ndvi.getMapId(vis_params)
+        logger.info(f"Map ID generated: {map_id['mapid']}")
 
         # Return map data to be consumed by the frontend
         return JsonResponse({
@@ -348,11 +361,11 @@ def get_map_data(request):
         })
 
     except ee.EEException as e:
-        # Handle Earth Engine-specific exceptions
+        logger.error(f"Earth Engine Error: {str(e)}")
         return JsonResponse({'error': 'Earth Engine Error: ' + str(e)}, status=500)
 
     except Exception as e:
-        # Handle any other exceptions
+        logger.error(f"Unexpected Error: {str(e)}")
         return JsonResponse({'error': 'Unexpected Error: ' + str(e)}, status=500)
     
     # ran after auth, created map object for testing on map-data:
