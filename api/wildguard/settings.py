@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'apps.my_app',
+    'wildguard',
 ]
 
 MIDDLEWARE = [
