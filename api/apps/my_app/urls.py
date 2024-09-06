@@ -18,7 +18,7 @@ urlpatterns = [
     path('start/', start_auth, name='start_auth'),  # Start OAuth2 flow
     path('oauth2callback/', oauth2callback, name='oauth2callback'), #OAuth callback
     path('poaching-risk/', get_poaching_risk, name='get_poaching_risk'), # Poaching risk endpoint
-    path('api/map-data/', get_map_data, name='get_map_data'),
+    path('map-data/', get_map_data, name='get_map_data'),
     path('', include(router.urls)), # other endpoints
 ]
 
