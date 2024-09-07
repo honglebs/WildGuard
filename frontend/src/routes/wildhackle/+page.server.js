@@ -3,7 +3,8 @@ import { Game } from './game';
 
 /** @satisfies {import('./$types').PageServerLoad} */
 export const load = ({ cookies }) => {
-	const game = new Game(cookies.get('wildhackle'));
+	const cookieValue = cookies.get('wildhackle') || '';
+	const game = new Game(cookieValue);
 
 	return {
 		/**
@@ -31,20 +32,25 @@ export const actions = {
 	 * is available, this will happen in the browser instead of here
 	 */
 	update: async ({ request, cookies }) => {
-		const game = new Game(cookies.get('wildhackle'));
+		try {
+			const game = new Game(cookies.get('wildhackle') || '');
 
-		const data = await request.formData();
-		const key = data.get('key');
+			const data = await request.formData();
+			const key = data.get('key');
 
-		const i = game.answers.length;
+			const i = game.answers.length;
 
-		if (key === 'backspace') {
-			game.guesses[i] = game.guesses[i].slice(0, -1);
-		} else {
-			game.guesses[i] += key;
+			if (key === 'backspace') {
+				game.guesses[i] = game.guesses[i] ? game.guesses[i].slice(0, -1) : '';
+			} else {
+				game.guesses[i] = (game.guesses[i] || '') + key;
+			}
+
+			cookies.set('wildhackle', game.toString(), { path: '/' });
+		} catch (error) {
+			console.error('Update error:', error);
+			return fail(500, { message: 'Internal server error during update' });
 		}
-
-		cookies.set('wildhackle', game.toString(), { path: '/' });
 	},
 
 	/**
@@ -52,19 +58,29 @@ export const actions = {
 	 * the server, so that people can't cheat by peeking at the JavaScript
 	 */
 	enter: async ({ request, cookies }) => {
-		const game = new Game(cookies.get('wildhackle'));
+		try {
+			const game = new Game(cookies.get('wildhackle') || '');
 
-		const data = await request.formData();
-		const guess = /** @type {string[]} */ (data.getAll('guess'));
+			const data = await request.formData();
+			const guess = /** @type {string[]} */ (data.getAll('guess'));
 
-		if (!game.enter(guess)) {
-			return fail(400, { badGuess: true });
+			if (!game.enter(guess)) {
+				return fail(400, { badGuess: true });
+			}
+
+			cookies.set('wildhackle', game.toString(), { path: '/' });
+		} catch (error) {
+			console.error('Enter error:', error);
+			return fail(500, { message: 'Internal server error during enter' });
 		}
-
-		cookies.set('wildhackle', game.toString(), { path: '/' });
 	},
 
 	restart: async ({ cookies }) => {
-		cookies.delete('wildhackle', { path: '/' });
+		try {
+			cookies.delete('wildhackle', { path: '/' });
+		} catch (error) {
+			console.error('Restart error:', error);
+			return fail(500, { message: 'Internal server error during restart' });
+		}
 	}
 };

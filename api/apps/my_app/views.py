@@ -22,6 +22,44 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# def get_map_data(request):
+#     logger.info("Request received at /api/map-data")
+
+def get_map_data(request):
+    logger.info("Request to /api/map-data received.")
+    credentials_info = request.session.get('credentials')
+
+    if not credentials_info:
+        logger.warning("No credentials found in session. Redirecting to OAuth2 flow.")
+        return HttpResponseRedirect(reverse('oauth2callback'))
+
+    try:
+        credentials = Credentials(
+            token=credentials_info['token'],
+            refresh_token=credentials_info['refresh_token'],
+            token_uri=credentials_info['token_uri'],
+            client_id=credentials_info['client_id'],
+            client_secret=credentials_info['client_secret'],
+            scopes=credentials_info['scopes']
+        )
+        logger.info("Credentials recreated successfully.")
+    except Exception as e:
+        logger.error(f"Error recreating credentials: {str(e)}")
+        return JsonResponse({'error': 'Error recreating credentials: ' + str(e)}, status=500)
+
+    try:
+        initialize_earth_engine(credentials)
+        logger.info("Earth Engine initialized successfully.")
+        
+        # Further logging or error handling around fetching imagery
+    except ee.EEException as e:
+        logger.error(f"Earth Engine Error: {str(e)}")
+        return JsonResponse({'error': 'Earth Engine Error: ' + str(e)}, status=500)
+    except Exception as e:
+        logger.error(f"Unexpected Error: {str(e)}")
+        return JsonResponse({'error': 'Unexpected Error: ' + str(e)}, status=500)
+
+
 # root view
 def home_view(request):
     return HttpResponse("Welcome to the Home Page!")
@@ -61,7 +99,8 @@ def start_auth(request):
 def oauth2callback(request):
 
     # load the client secrets from JSON file 
-    state = request.session['state']
+    # state = request.session['state']
+    state = request.session.get('state')
 
     if not state:
         return JsonResponse({'error': 'State not found in session.'}, status=400)
@@ -297,11 +336,26 @@ def get_poaching_risk(request):
  # find where to render map 
  
 
+# def initialize_earth_engine(credentials):
+#     # Initialize Earth Engine with OAuth2 credentials
+#     ee.Initialize(credentials)
+
 def initialize_earth_engine(credentials):
-    # Initialize Earth Engine with OAuth2 credentials
-    ee.Initialize(credentials)
+    try:
+        ee.Initialize(credentials)
+        logger.info("Earth Engine initialized successfully.")
+    except ee.EEException as e:
+        logger.error(f"Earth Engine EEException: {str(e)}")
+        raise e
+    except Exception as e:
+        logger.error(f"Unexpected error in Earth Engine initialization: {str(e)}")
+        raise e
+
 
 def get_map_data(request):
+    if 'credentials' not in request.session:
+        return JsonResponse({'error': 'Not authenticated'}, status=403)
+    
     logger.info("Request to /api/map-data received.")
 
     # Retrieve the stored credentials from the session

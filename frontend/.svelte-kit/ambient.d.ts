@@ -31,7 +31,6 @@ declare module '$env/static/private' {
 	export const INIT_CWD: string;
 	export const TERM: string;
 	export const SHELL: string;
-	export const HOMEBREW_REPOSITORY: string;
 	export const TMPDIR: string;
 	export const npm_config_global_prefix: string;
 	export const TERM_PROGRAM_VERSION: string;
@@ -47,6 +46,7 @@ declare module '$env/static/private' {
 	export const SSH_AUTH_SOCK: string;
 	export const __CF_USER_TEXT_ENCODING: string;
 	export const npm_execpath: string;
+	export const VIRTUAL_ENV: string;
 	export const PATH: string;
 	export const npm_package_json: string;
 	export const npm_config_engine_strict: string;
@@ -58,6 +58,7 @@ declare module '$env/static/private' {
 	export const __CFBundleIdentifier: string;
 	export const npm_command: string;
 	export const PWD: string;
+	export const JAVA_HOME: string;
 	export const npm_lifecycle_event: string;
 	export const EDITOR: string;
 	export const npm_package_name: string;
@@ -72,17 +73,15 @@ declare module '$env/static/private' {
 	export const SHLVL: string;
 	export const HOME: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
-	export const HOMEBREW_PREFIX: string;
 	export const npm_config_cache: string;
 	export const LOGNAME: string;
 	export const npm_lifecycle_script: string;
 	export const VSCODE_GIT_IPC_HANDLE: string;
 	export const npm_config_user_agent: string;
-	export const INFOPATH: string;
-	export const HOMEBREW_CELLAR: string;
 	export const VSCODE_GIT_ASKPASS_NODE: string;
 	export const GIT_ASKPASS: string;
 	export const SECURITYSESSIONID: string;
+	export const VIRTUAL_ENV_PROMPT: string;
 	export const npm_node_execpath: string;
 	export const npm_config_prefix: string;
 	export const COLORTERM: string;
@@ -123,7 +122,6 @@ declare module '$env/dynamic/private' {
 		INIT_CWD: string;
 		TERM: string;
 		SHELL: string;
-		HOMEBREW_REPOSITORY: string;
 		TMPDIR: string;
 		npm_config_global_prefix: string;
 		TERM_PROGRAM_VERSION: string;
@@ -139,6 +137,7 @@ declare module '$env/dynamic/private' {
 		SSH_AUTH_SOCK: string;
 		__CF_USER_TEXT_ENCODING: string;
 		npm_execpath: string;
+		VIRTUAL_ENV: string;
 		PATH: string;
 		npm_package_json: string;
 		npm_config_engine_strict: string;
@@ -150,6 +149,7 @@ declare module '$env/dynamic/private' {
 		__CFBundleIdentifier: string;
 		npm_command: string;
 		PWD: string;
+		JAVA_HOME: string;
 		npm_lifecycle_event: string;
 		EDITOR: string;
 		npm_package_name: string;
@@ -164,17 +164,15 @@ declare module '$env/dynamic/private' {
 		SHLVL: string;
 		HOME: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
-		HOMEBREW_PREFIX: string;
 		npm_config_cache: string;
 		LOGNAME: string;
 		npm_lifecycle_script: string;
 		VSCODE_GIT_IPC_HANDLE: string;
 		npm_config_user_agent: string;
-		INFOPATH: string;
-		HOMEBREW_CELLAR: string;
 		VSCODE_GIT_ASKPASS_NODE: string;
 		GIT_ASKPASS: string;
 		SECURITYSESSIONID: string;
+		VIRTUAL_ENV_PROMPT: string;
 		npm_node_execpath: string;
 		npm_config_prefix: string;
 		COLORTERM: string;

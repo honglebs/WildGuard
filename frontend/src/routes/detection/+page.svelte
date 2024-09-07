@@ -2,73 +2,62 @@
     export const ssr = false;
     import { onMount } from 'svelte';
 
-    let map;  // Store the Leaflet map instance
-    let error = null;  // Track errors
+    let map;
+    let error = null;
 
-    // Fetch map data from the backend
     async function fetchMapData() {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/map-data/');
-            
-            console.log('Response status:', response.status);  // Log the status code
+            const response = await fetch('/api/map-data/', {
+                method: 'GET',
+                credentials: 'include',
+            });
 
-            if (!response.ok) {
-                throw new Error(`Failed to load map data from the backend. Status code: ${response.status}`);
+            if (response.status === 403 || response.status === 401) {
+                window.location.href = '/api/start-auth/';
+                return null;
             }
 
-            const data = await response.json();
-            console.log("Map Data Fetched:", data);  // Log fetched data for debugging
-            return data;
-        } catch (err) {
-            error = err instanceof Error ? err.message : 'An unknown error occurred while fetching map data.';
-            console.error("Error while fetching map data:", err);  // Log error
-            return null;  // Return null on error
+            if (!response.ok) {
+                throw new Error(`Error fetching data: ${response.status} ${response.statusText}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("Error while fetching map data:", error.message);
+            error = `Error fetching map data: ${error.message}`;
+            return null;
         }
     }
 
-    // Initialize the Leaflet map once the component mounts
     onMount(async () => {
-        if (typeof window !== 'undefined') {  // Only run on the client side
+        if (typeof window !== 'undefined') {
             try {
-                const L = await import('leaflet');  // Dynamically import Leaflet
+                const L = await import('leaflet');
 
-                const mapData = await fetchMapData();  // Fetch map data
+                const mapData = await fetchMapData();
 
-                if (mapData && !error) {
+                if (mapData) {
                     map = L.map('map').setView([0, 15], 5);
-
-                    // Add a tile layer to the map using the data from the backend
                     L.tileLayer(mapData.tile_url, {
                         attribution: 'Map data © Google Earth Engine',
                         maxZoom: 18,
-                        tileSize: 256,
-                        zoomOffset: 0,
                     }).addTo(map);
+                } else {
+                    error = 'Failed to fetch map data. Please try refreshing the page.';
                 }
             } catch (err) {
-                error = 'Error initializing map';  // Handle any initialization errors
+                error = `Error initializing map: ${err.message || 'Unknown error'}`;
                 console.error("Map Initialization Error:", err);
             }
         }
     });
 </script>
 
-
-<svelte:head>
-    <title>Live Detection</title>
-</svelte:head>
-
-<div class="container d-flex align-items-center">
-    <p>Live Detection</p>
+<div class="container align-items-center">
+    <h1> 🔴 Live <span style="color:var(--highlights)"> Detection</span></h1>
     <div id="map" style="width: 100%; height: 600px;"></div>
+    
     {#if error}
-        <p>Error: {error}</p>
-    {/if}
+    <p>Error: {error}</p>
+    {/if} 
 </div>
-
-<style>
-    #map {
-        width: 100%;
-        height: 600px;
-    }
-</style>

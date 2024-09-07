@@ -43,6 +43,8 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5000",  # or wherever your Svelte app is running
     "http://127.0.0.1:5000",
